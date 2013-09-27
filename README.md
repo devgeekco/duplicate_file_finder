@@ -1,4 +1,4 @@
-duplicate_file_finder
+Duplicate File Finder
 =====================
 
 Finding duplicate files based on MacOS or Linux machine. 
