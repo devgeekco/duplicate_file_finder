@@ -11,7 +11,6 @@ Duff Util header class
 class duff_utils {
 	public:
 		int get_hash(); // TODO: get type to pass function
-
-}
+};
 
 #endif __DUFF_UTIL_H_INCLUDED__
