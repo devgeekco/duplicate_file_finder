@@ -12,6 +12,8 @@ System scan header class
 #include <boost/foreach.hpp>
 #include <boost/range.hpp>
 #include <iostream>
+#include <boost/regex.hpp>
+
 using namespace std;
 
 namespace bf = boost::filesystem;

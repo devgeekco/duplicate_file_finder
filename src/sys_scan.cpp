@@ -11,12 +11,15 @@
 
 // Scans each folder and its sub-directory
 int sys_scan::sscan(string folder_path) {
+  //possible files to be excluded from duplicate list finder
+  boost::regex pattern("(.*)(.git)(.*)|(.*)(.~)") ;
 
   BOOST_FOREACH(bf::path folder_path,
                 boost::make_iterator_range(
                                            bf::recursive_directory_iterator(bf::path(folder_path)),
                                            bf::recursive_directory_iterator())) {
-    std::cout << folder_path.string() << std::endl;
+    if(!boost::regex_match (folder_path.string(), pattern))
+      cout << folder_path.string() << endl;
   }
   return 0;
 }
