@@ -11,7 +11,7 @@
 
 // Scans each folder and its sub-directory
 int sys_scan::sscan(string folder_path) {
-  //possible files to be excluded from duplicate list finder
+  //possible files to be excluded from duplicate finder list
   boost::regex pattern("(.*)(.git)(.*)|(.*)(.~)") ;
 
   BOOST_FOREACH(bf::path folder_path,
