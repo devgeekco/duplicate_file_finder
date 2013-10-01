@@ -1,4 +1,10 @@
 Duplicate File Finder
 =====================
 
-Finding duplicate files based on MacOS or Linux machine. 
+Finding duplicate files in MacOS or Linux machine.
+
+Requirements:
+
+g++ compiler
+Boost 1.53.0 Library  
+
