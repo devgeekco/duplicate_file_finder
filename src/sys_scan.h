@@ -15,6 +15,8 @@ System scan header class
 #include <boost/thread.hpp>
 #include <iostream>
 
+#include "duff_utils.h"
+
 using namespace std;
 
 namespace bf = boost::filesystem;

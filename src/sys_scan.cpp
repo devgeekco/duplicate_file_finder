@@ -13,6 +13,7 @@
 boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)(.git)(.*)|(.*)(.~)") ;
 int thread = 0;
 std::vector<boost::thread *> thread_list;
+duff_utils dutils;
 
 // Recognises each file type
 // take MD5 of the file and save it to the database with absolute path
@@ -21,16 +22,17 @@ int sys_scan::sscan(string folder_path) {
   try {
     if (bf::exists(folder_path)) {
       if(!boost::regex_match (folder_path, pattern)) {
-	    if (is_regular_file((bf::path) folder_path)) // is p a regular file? 
-	      cout << folder_path << " size is " << file_size((bf::path) folder_path) << '\n';
-	    else if (is_directory((bf::path) folder_path)) {     // is p a directory?
-		cout <<  "\n#### " << folder_path << " is a directory containing:\n\n";
-		boost::thread ss_thread(&sscan_dir,(bf::path) folder_path);
-		ss_thread.join();
-	      }
-	    else
-	      cout << folder_path << " exists, but is neither a regular file nor a directory\n";	    
-	  }
+	if (is_regular_file((bf::path) folder_path)) {// is p a regular file? 
+	  // cout << folder_path << " size is " << file_size((bf::path) folder_path) << '\n';
+	  dutils.get_hash(folder_path);
+	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
+	  cout <<  "\n#### " << folder_path << " is a directory containing:\n\n";
+	  boost::thread ss_thread(&sscan_dir,(bf::path) folder_path);
+	  ss_thread.join();
+	}
+	else
+	  cout << folder_path << " exists, but is neither a regular file nor a directory\n";	    
+      }
     } else
       cout << "\tOoops! "<< folder_path << " does not exist\n";
   } catch (const bf::filesystem_error& ex) {
