@@ -12,7 +12,6 @@
 //possible files to be excluded from duplicate finder list
 boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)(.git)(.*)|(.*)(.~)") ;
 int thread = 0;
-std::vector<boost::thread *> thread_list;
 duff_utils dutils;
 
 // Recognises each file type
@@ -25,6 +24,7 @@ int sys_scan::sscan(string folder_path) {
 	if (is_regular_file((bf::path) folder_path)) {// is p a regular file? 
 	  // cout << folder_path << " size is " << file_size((bf::path) folder_path) << '\n';
 	  dutils.get_hash(folder_path);
+	  dutils.get_hash_filename(folder_path);
 	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
 	  cout <<  "\n#### " << folder_path << " is a directory containing:\n\n";
 	  boost::thread ss_thread(&sscan_dir,(bf::path) folder_path);

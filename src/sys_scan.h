@@ -18,11 +18,9 @@ System scan header class
 #include "duff_utils.h"
 
 using namespace std;
+namespace bf = boost::filesystem; 
 
-namespace bf = boost::filesystem;
-
-// scanning directory
-int sscan_dir(bf::path); 
+int sscan_dir(bf::path);
 
 class sys_scan {
  public:

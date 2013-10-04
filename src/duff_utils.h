@@ -24,8 +24,11 @@ namespace bf = boost::filesystem;
 class duff_utils {
  public:
   int get_hash(string);
+  int get_hash_filename(string); // TODO implement md5 for only file name
  private:
+  char mdString[33];
   unsigned long get_size_by_fd(int);
+  char* do_md5(char *, int);
 };
 
 #endif __DUFF_UTIL_H_INCLUDED__
