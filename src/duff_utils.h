@@ -1,5 +1,5 @@
 /*-------------------------------------------------------------------
-Duff Util header class
+Duff and sql Utils header class
 
 @Author Ankit Singh
 @Copyright 2013
@@ -17,18 +17,34 @@ Duff Util header class
 #include <sys/mman.h>
 #include <sys/stat.h>
 
+#include <sqlite3.h> 
+
 using namespace std;
 
 namespace bf = boost::filesystem;
 
+// Class specific to utils required for the operations
 class duff_utils {
- public:
-  int get_hash(string);
-  int get_hash_filename(string); // TODO implement md5 for only file name
  private:
   char mdString[33];
   unsigned long get_size_by_fd(int);
+ public:
+  int get_hash(string);
+  int get_hash_filename(string);
   char* do_md5(char *, int);
+  char* string_to_charstr(string);
+};
+
+// Class specific to db operations
+class sqldb_utils : public duff_utils {
+ private:
+  sqlite3 *db;
+  int rc; // result of sql execution
+  static int callback(void *, int, char**, char**);
+ public:
+  int sqlite_open_db(char *); // try to open db else throw error
+  int sqlite_create_db(char *, char *); // create new default DB
+  int sqlite_insert_db(char *, char *);
 };
 
 #endif __DUFF_UTIL_H_INCLUDED__
