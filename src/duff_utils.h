@@ -1,8 +1,8 @@
 /*-------------------------------------------------------------------
 Duff and sql Utils header class
 
-@Author Ankit Singh
-@Copyright 2013
+@Author Ankit Singh (ankit@devgeek.co)
+@Copyright 2013 devgeek.co
 --------------------------------------------------------------------*/
 
 #ifndef __DUFF_UTIL_H_INCLUDED__
@@ -41,10 +41,14 @@ class sqldb_utils : public duff_utils {
   sqlite3 *db;
   int rc; // result of sql execution
   static int callback(void *, int, char**, char**);
+  int sqlite3_exec_statement(char *, char *, const char*);
  public:
   int sqlite_open_db(char *); // try to open db else throw error
   int sqlite_create_db(char *, char *); // create new default DB
-  int sqlite_insert_db(char *, char *);
+  int sqlite_insert_db(char *, char *); // (statement, table name)
+  int sqlite_update_db(char *, char *); 
+  int sqlite_delete_db(char *, char *); 
+  int sqlite_select_db(char *, char *); // (select query, table name)
 };
 
 #endif __DUFF_UTIL_H_INCLUDED__

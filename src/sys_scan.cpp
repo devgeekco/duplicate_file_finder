@@ -4,7 +4,6 @@
 *
 * @Author Ankit Singh (ankit@devgeek.co)
 * @Copyright 2013 devgeek.co
-*
 **********************************************************************/
 
 #include "sys_scan.h"

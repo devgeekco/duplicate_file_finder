@@ -2,9 +2,8 @@
 * Various Utils like hash functions, type conversions etc. will contain in this 
 * class.
 *
-* @Author Ankit Singh (iankits) 
-*
-*
+* @Author Ankit Singh (ankit@devgeek.co)
+* @Copyright 2013 devgeek.co 
 -----------------------------------------------------------------------------------*/
 
 #include "duff_utils.h"
@@ -102,50 +101,68 @@ int  sqldb_utils::sqlite_open_db(char * db_name) {
 /* Create SQL Example statement 
    sql = "CREATE TABLE SCANRESULT("  \
          "FILE VARCHAR(255) PRIMARY KEY     NOT NULL," \
-         "SIZE_HASH           CHAR(32)    NOT NULL," \
+         "FILE_HASH           CHAR(32)    NOT NULL," \
          "NAME_HASH           CHAR(32)    NOT NULL," \
          "SIZE                INT," \
-	  "FILE_TYPE          CHAR(10)," \
+	 "FILE_TYPE          CHAR(10)," \
          "DUP_COUNT           INT );";
  */
 // creates new sqlite3 db
 int sqldb_utils::sqlite_create_db(char * sql_create_table, char * table_name) {
-  int status = 1;
-  char *zErrMsg = 0;
-
   sqlite_open_db(table_name); // open db
 
-  /* Execute SQL statement */
-  rc = sqlite3_exec(db, sql_create_table, callback, 0, &zErrMsg);
-
-  if( rc != SQLITE_OK ){
-     fprintf(stderr, "SQL error: %s\n", zErrMsg);
-     sqlite3_free(zErrMsg);
-  } else {
-    fprintf(stdout, "Table created successfully\n");
-    status = 0;
-   }
-  sqlite3_close(db);
-
-  return status;
+  return  sqlite3_exec_statement(sql_create_table, table_name, 0);
 }
 
 // SQL statement for inserting data into table
-int sqldb_utils::sqlite_insert_db(char *sql_insert, char * table_name) {
-  int status = 1;
-  char *zErrMsg = 0;
+int sqldb_utils::sqlite_insert_db(char *sql_insert_statement, char * table_name) {
+  sqlite_open_db(table_name); // open db
+
+  return sqlite3_exec_statement(sql_insert_statement, table_name, 0);
+}
+
+// SQL statement for updating data into table
+int sqldb_utils::sqlite_update_db(char *sql_update_statement, char * table_name) {
+  const char* data = "Callback function called for Update data";
+
+  sqlite_open_db(table_name); // open db
+  
+  return sqlite3_exec_statement(sql_update_statement, table_name, data);
+}
+
+// SQL query for deleting  data from table
+int sqldb_utils::sqlite_delete_db(char *sql_delete_statement, char * table_name) {
+  const char* data = "Callback function called to Delete data";
 
   sqlite_open_db(table_name); // open db
 
+  return sqlite3_exec_statement(sql_delete_statement, table_name, data);
+}
+
+// SQL query for retriving data from table
+int sqldb_utils::sqlite_select_db(char *sql_query, char * table_name) {
+  const char* data = "Callback function called for Sql Query";
+
+  sqlite_open_db(table_name); // open db
+
+  return sqlite3_exec_statement(sql_query, table_name, data);
+}
+
+// executing statements
+int sqldb_utils::sqlite3_exec_statement(char *sql_statement, char * table_name, const char* data) {
+  int status = 1; // default false i.e fail 
+  
+  char *zErrMsg = 0;
   /* Execute SQL statement */
-  rc = sqlite3_exec(db, sql_insert, callback, 0, &zErrMsg);
-   if( rc != SQLITE_OK ) {
-      fprintf(stderr, "SQL error: %s\n", zErrMsg);
-      sqlite3_free(zErrMsg);
-   } else {
-     fprintf(stdout, "Records created successfully\n");
-     status = 0;
-   }
-   sqlite3_close(db);
-   return status;
+  rc = sqlite3_exec(db, sql_statement, callback, (void*)data, &zErrMsg);
+  if( rc != SQLITE_OK ){
+    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    sqlite3_free(zErrMsg);
+  } else {
+    fprintf(stdout, "Operation done successfully\n");
+    status = 0;
+  }
+  sqlite3_close(db);
+
+  return status;
 }
