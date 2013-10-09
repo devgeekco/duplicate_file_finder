@@ -20,15 +20,17 @@ int main(int argc, char** argv) {
   
   sys_scan ss;
   sqldb_utils sql_utils;
-  char * sql = "CREATE TABLE SCANRESULT("	     \
+  char sql[] = "CREATE TABLE SCANRESULT("	     \
     "FILE VARCHAR(255) PRIMARY KEY     NOT NULL,"    \
     "FILE_HASH           CHAR(32)    NOT NULL,"	     \
     "NAME_HASH           CHAR(32)    NOT NULL,"	     \
     "SIZE                INT,"			     \
     "FILE_TYPE          CHAR(10),"		     \
     "DUP_COUNT           INT );";
+  
+  char tablename[] = "SCANRESULT";
 
-  sql_utils.sqlite_create_db(sql, "SCANRESULT");
+  sql_utils.sqlite_create_db(sql, tablename);
 
 
   ss.sscan(argv[1]);

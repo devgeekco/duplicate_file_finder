@@ -17,11 +17,13 @@ duff_utils dutils;
 // take MD5 of the file and save it to the database with absolute path
 // if directory and then create a new thread 'sscan_dir' to scan it
 int sys_scan::sscan(string folder_path) {
+  int filesize;
   try {
     if (bf::exists(folder_path)) {
       if(!boost::regex_match (folder_path, pattern)) {
 	if (is_regular_file((bf::path) folder_path)) {// is p a regular file? 
-	  // cout << folder_path << " size is " << file_size((bf::path) folder_path) << '\n';
+	  filesize = file_size((bf::path) folder_path);
+	  cout << folder_path << " size is " << filesize << '\n';
 	  dutils.get_hash(folder_path);
 	  dutils.get_hash_filename(folder_path);
 	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
