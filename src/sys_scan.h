@@ -14,6 +14,7 @@ System scan header class
 #include <boost/regex.hpp>
 #include <boost/thread.hpp>
 #include <iostream>
+#include <magic.h>
 
 #include "duff_utils.h"
 

@@ -71,6 +71,8 @@ char* duff_utils::string_to_charstr(string input_to_convert) {
   return to_char;
 } 
 
+// ----------------- SQLITE class implementations --------------------------------
+
 // Callback function for sqlite3 executions
 int sqldb_utils::callback(void *NotUsed, int argc, char **argv, char **azColName){
    int i;
