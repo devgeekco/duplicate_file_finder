@@ -10,24 +10,19 @@ Duff and sql Utils header class
 
 #include <stdio.h>
 #include <string.h>
-#include <fcntl.h>
-#include <openssl/md5.h>
 #include <iostream>
 #include <boost/filesystem/convenience.hpp>
-#include <sys/mman.h>
-#include <sys/stat.h>
-
 #include <sqlite3.h> 
 
-using namespace std;
+#include "md5.h"
 
+using namespace std;
 namespace bf = boost::filesystem;
 
 // Class specific to utils required for the operations
 class duff_utils {
  private:
-  char mdString[33];
-  unsigned long get_size_by_fd(int);
+  char * mdString;
  public:
   int get_hash(string);
   int get_hash_filename(string);

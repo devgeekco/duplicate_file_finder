@@ -16,6 +16,6 @@ Requirements:
 * g++ compiler
 * cmake
 * Boost 1.53.0 Library
-* OpenSSL (used MD5 hashing algorithm only)
-* Sqlite3  
+* Sqlite3
+* libmagic (magic.h) // for finding file type  
 

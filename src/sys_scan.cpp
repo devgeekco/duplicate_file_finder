@@ -24,7 +24,7 @@ int sys_scan::sscan(string folder_path) {
       if(!boost::regex_match (folder_path, pattern)) {
 	if (is_regular_file((bf::path) folder_path)) {// is p a regular file? 
 	  filesize = file_size((bf::path) folder_path);
-	  cout << folder_path << " size is " << filesize << '\n';
+	  cout << "\n"<< folder_path << " size is " << filesize << '\n';
 	  
 	  myt = magic_open(MAGIC_CONTINUE|MAGIC_ERROR/*|MAGIC_DEBUG*/|MAGIC_MIME);
 	  magic_load(myt,NULL);
