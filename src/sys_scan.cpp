@@ -12,6 +12,7 @@
 boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)(.git)(.*)|(.*)(.~)") ;
 int thread = 0;
 duff_utils dutils;
+magic_t myt;
 
 // Recognises each file type
 // take MD5 of the file and save it to the database with absolute path
@@ -24,6 +25,12 @@ int sys_scan::sscan(string folder_path) {
 	if (is_regular_file((bf::path) folder_path)) {// is p a regular file? 
 	  filesize = file_size((bf::path) folder_path);
 	  cout << folder_path << " size is " << filesize << '\n';
+	  
+	  myt = magic_open(MAGIC_CONTINUE|MAGIC_ERROR/*|MAGIC_DEBUG*/|MAGIC_MIME);
+	  magic_load(myt,NULL);
+	  printf("magic output: '%s'\n",magic_file(myt,dutils.string_to_charstr(folder_path)));
+	  magic_close(myt);
+	  
 	  dutils.get_hash(folder_path);
 	  dutils.get_hash_filename(folder_path);
 	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
