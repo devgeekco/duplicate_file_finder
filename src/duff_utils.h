@@ -24,14 +24,14 @@ class duff_utils {
  private:
   char * mdString;
  public:
-  int get_hash(string);
-  int get_hash_filename(string);
-  char* do_md5(char *, int);
+  char * get_hash(string);
+  char * get_hash_filename(string);
+  int do_md5(char *, int);
   char* string_to_charstr(string);
 };
 
 // Class specific to db operations
-class sqldb_utils : public duff_utils {
+class sqldb_utils {
  private:
   sqlite3 *db;
   int rc; // result of sql execution

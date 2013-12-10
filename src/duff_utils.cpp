@@ -9,27 +9,26 @@
 #include "duff_utils.h"
 
 // get the hash value of the files
-int duff_utils::get_hash(string file) {
+char * duff_utils::get_hash(string file) {
   char *file_name_char = string_to_charstr(file); 
   
   do_md5(file_name_char, 0); // TODO: put enum instead of plain number
 
-  return 0;
+  return mdString;
 }
 
 // get the hash value of the files name i.e strings only
-int duff_utils::get_hash_filename(string file) {
-  char *file_name_char = new char[file.length() + 1];  
-  strcpy(file_name_char,file.c_str()); // conversion from string to char *
+char * duff_utils::get_hash_filename(string file) {
+  char *file_name_char = string_to_charstr(file);
   
   cout << "MD5 of Strings ONLY: ";
   do_md5(file_name_char, 1);
 
-  return 0;
+  return mdString;
 }
 
 // Get MD5 of the given input for filename
-char* duff_utils::do_md5(char * file_name, int options) {
+int duff_utils::do_md5(char * file_name, int options) {
   MD5 md5;
 
   switch (options) {
@@ -45,7 +44,7 @@ char* duff_utils::do_md5(char * file_name, int options) {
   }
 
   printf("md5 digest of %s: %s\n", file_name, mdString);
-  return mdString;
+  return 0;
 }
 
 // converts string to char
@@ -127,7 +126,7 @@ int sqldb_utils::sqlite_delete_db(char *sql_delete_statement, char * table_name)
 
 // SQL query for retriving data from table
 int sqldb_utils::sqlite_select_db(char *sql_query, char * table_name) {
-  const char* data = "Callback function called for Sql Query";
+  const char* data = "Callback function called for Sql select Query";
 
   sqlite_open_db(table_name); // open db
 
@@ -148,7 +147,7 @@ int sqldb_utils::sqlite3_exec_statement(char *sql_statement, char * table_name, 
     fprintf(stdout, "Operation done successfully\n");
     status = 0;
   }
-  sqlite3_close(db);
+   sqlite3_close(db);
 
   return status;
 }

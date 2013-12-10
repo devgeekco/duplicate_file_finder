@@ -22,10 +22,10 @@ int main(int argc, char** argv) {
   sqldb_utils sql_utils;
   char sql[] = "CREATE TABLE SCANRESULT("	     \
     "FILE VARCHAR(255) PRIMARY KEY     NOT NULL,"    \
-    "FILE_HASH           CHAR(32)    NOT NULL,"	     \
-    "NAME_HASH           CHAR(32)    NOT NULL,"	     \
+    "FILE_HASH           VARCHAR(64)    NOT NULL,"	     \
+    "NAME_HASH           VARCHAR(64)    NOT NULL,"	     \
     "SIZE                INT,"			     \
-    "FILE_TYPE          CHAR(10),"		     \
+    "FILE_TYPE          CHAR(40),"		     \
     "DUP_COUNT           INT );";
   
   char tablename[] = "SCANRESULT";

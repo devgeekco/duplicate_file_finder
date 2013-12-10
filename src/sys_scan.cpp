@@ -13,12 +13,18 @@ boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)
 int thread = 0;
 duff_utils dutils;
 magic_t myt;
+sqldb_utils sqlu;
 
 // Recognises each file type
 // take MD5 of the file and save it to the database with absolute path
 // if directory and then create a new thread 'sscan_dir' to scan it
 int sys_scan::sscan(string folder_path) {
   int filesize;
+  char sql[230] ;
+  char tablename[] = "SCANRESULT";
+  char * folderp_cstr = dutils.string_to_charstr(folder_path);
+  char* hash_file = (char *) malloc(33);  
+  char* hash_filename = (char *) malloc(33);  
   try {
     if (bf::exists(folder_path)) {
       if(!boost::regex_match (folder_path, pattern)) {
@@ -28,11 +34,15 @@ int sys_scan::sscan(string folder_path) {
 	  
 	  myt = magic_open(MAGIC_CONTINUE|MAGIC_ERROR/*|MAGIC_DEBUG*/|MAGIC_MIME);
 	  magic_load(myt,NULL);
-	  printf("magic output: '%s'\n",magic_file(myt,dutils.string_to_charstr(folder_path)));
-	  magic_close(myt);
+	  //printf("magic output: '%s'\n",magic_file(myt,folderp_cstr));
+	  strcpy(hash_file, dutils.get_hash(folder_path));
+	  strcpy(hash_filename, dutils.get_hash_filename(folder_path));
 	  
-	  dutils.get_hash(folder_path);
-	  dutils.get_hash_filename(folder_path);
+	  sprintf( sql, "INSERT INTO %s (FILE, FILE_HASH, NAME_HASH, SIZE, FILE_TYPE, DUP_COUNT) VALUES ('%s','%s','%s',%d,'%s',0);", tablename, folderp_cstr, hash_file, hash_filename, filesize, magic_file(myt,folderp_cstr));
+	  magic_close(myt);
+	  // sprintf( sql, "SELECT * FROM %s",tablename);
+	  printf("Full SQL INSERT STATEMENT::: %s ", sql);
+	  sqlu.sqlite_insert_db(sql, tablename); // insert file data into table
 	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
 	  cout <<  "\n#### " << folder_path << " is a directory containing:\n\n";
 	  boost::thread ss_thread(&sscan_dir,(bf::path) folder_path);
