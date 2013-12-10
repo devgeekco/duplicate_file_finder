@@ -9,7 +9,7 @@
 #include "sys_scan.h"
 
 //possible files to be excluded from duplicate finder list
-boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)(.git)(.*)|(.*)(.~)") ;
+boost::regex pattern("(.*)(.rvm)(.*)|(.*)(.Trash)(.*)|(.*)(.DS_Store)(.*)|(.*)(.android)(.*)|(.*)(.bunclde)(.*)|(.*)(.macports)(.*)|(.*)(.gradle)(.*)|(.*)(.heroku)(.*)|(.*)(.config)(.*)|(.*)(CMakeFiles)(.*)|(.*)(.git)(.*)|(.*)(.~)") ;
 int thread = 0;
 duff_utils dutils;
 magic_t myt;
@@ -20,7 +20,7 @@ sqldb_utils sqlu;
 // if directory and then create a new thread 'sscan_dir' to scan it
 int sys_scan::sscan(string folder_path) {
   int filesize;
-  char sql[230] ;
+  char sql[520] ;
   char tablename[] = "SCANRESULT";
   char * folderp_cstr = dutils.string_to_charstr(folder_path);
   char* hash_file = (char *) malloc(33);  
