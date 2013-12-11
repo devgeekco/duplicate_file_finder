@@ -32,7 +32,7 @@ int main(int argc, char** argv) {
 
   sql_utils.sqlite_create_db(sql, tablename);
 
-
+  // Scanning directory and hashing files
   ss.sscan(argv[1]);
 
   return 0;
