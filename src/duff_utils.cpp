@@ -73,10 +73,10 @@ int  sqldb_utils::sqlite_open_db(char * db_name) {
    /* Open database */
    rc = sqlite3_open(db_name, &db);
    if( rc ) {
-      fprintf(stderr, "Can't open database: %s\n", sqlite3_errmsg(db));
+      fprintf(stderr, "\n Can't open database: %s\n", sqlite3_errmsg(db));
       //exit(0);
    } else {
-      fprintf(stdout, "Opened database successfully\n");
+      fprintf(stdout, "\n Opened database successfully\n");
       status = 0; // SUCCESS
    }
 
@@ -141,10 +141,10 @@ int sqldb_utils::sqlite3_exec_statement(char *sql_statement, char * table_name, 
   /* Execute SQL statement */
   rc = sqlite3_exec(db, sql_statement, callback, (void*)data, &zErrMsg);
   if( rc != SQLITE_OK ){
-    fprintf(stderr, "SQL error: %s\n", zErrMsg);
+    fprintf(stderr, "\n SQL error: %s\n", zErrMsg);
     sqlite3_free(zErrMsg);
   } else {
-    fprintf(stdout, "Operation done successfully\n");
+    fprintf(stdout, "\n Operation done successfully\n");
     status = 0;
   }
    sqlite3_close(db);
