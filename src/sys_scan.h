@@ -18,6 +18,8 @@ System scan header class
 
 #include "duff_utils.h"
 
+#define ZEROHASH "d41d8cd98f00b204e9800998ecf8427e"
+
 using namespace std;
 namespace bf = boost::filesystem; 
 

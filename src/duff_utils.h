@@ -26,6 +26,7 @@ class duff_utils {
  public:
   char * get_hash(string);
   char * get_hash_filename(string);
+  char * get_hash_1024only(string);
   int do_md5(char *, int);
   char* string_to_charstr(string);
 };

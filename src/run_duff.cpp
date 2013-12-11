@@ -28,7 +28,7 @@ int main(int argc, char** argv) {
     "FILE_TYPE          CHAR(40),"		     \
     "DUP_COUNT           INT );";
   
-  char tablename[] = "db/SCANRESULT";
+  char tablename[] = "SCANRESULT";
 
   sql_utils.sqlite_create_db(sql, tablename);
 

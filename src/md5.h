@@ -49,11 +49,6 @@
 #define S43 15
 #define S44 21
 
-
-
-
-
-
 static unsigned char PADDING[64] = {
   0x80, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
@@ -334,6 +329,31 @@ public:
   // This version of the digest is actually
   // a "printf'd" version of the digest.
   char digestChars[ 33 ] ;
+
+/// Load a file from disk and digest only 1024 bytes of file
+  // Digests 1024 bytes a file and returns the result.
+  char* digestFirst1024FileOnly( char *filename )
+  {
+    Init() ;
+
+    FILE *file;
+    
+    int len;
+    unsigned char buffer[1024];
+
+    if( (file = fopen (filename, "rb")) == NULL )
+      printf( "%s can't be opened\n", filename ) ;
+    else
+    {
+      len = fread( buffer, 1, 1024, file ); 
+      Update( buffer, len ) ;
+      Final();
+
+      fclose( file );
+    }
+
+    return digestChars ;
+  }
 
   /// Load a file from disk and digest it
   // Digests a file and returns the result.

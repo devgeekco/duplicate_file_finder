@@ -27,6 +27,16 @@ char * duff_utils::get_hash_filename(string file) {
   return mdString;
 }
 
+// get the hash value of the 1024 bytes of files
+char * duff_utils::get_hash_1024only(string file) {
+  char *file_name_char = string_to_charstr(file);
+  
+  cout << "MD5 of 1024 bytes ONLY: ";
+  do_md5(file_name_char, 2);
+
+  return mdString;
+}
+
 // Get MD5 of the given input for filename
 int duff_utils::do_md5(char * file_name, int options) {
   MD5 md5;
@@ -38,6 +48,9 @@ int duff_utils::do_md5(char * file_name, int options) {
   case 1:
      mdString = md5.digestString(file_name);
      break;
+  case 2:
+    mdString = md5.digestFirst1024FileOnly(file_name);
+    break;
   default:
     cout << "\n \n ### wrong option for hashing ### \n";
     break;

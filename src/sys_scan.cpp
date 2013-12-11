@@ -32,16 +32,29 @@ int sys_scan::sscan(string folder_path) {
 	  filesize = file_size((bf::path) folder_path);
 	  cout << "\n"<< folder_path << " size is " << filesize << '\n';
 	  
+	  // optimizing time to hash and save database
+	  if (filesize == 0) {
+	    strcpy(hash_file, ZEROHASH);
+	    printf("\n ## ++++ If file 0 bytes then DEFAULT HASH: %s\n",hash_file);
+	  } else if (filesize >= 1024) {
+	     printf("\n ##### ++++++ If file >= 1024 bytes \n");
+	    // get the hash of 1024 bytes only for large files
+	    strcpy(hash_file, dutils.get_hash_1024only(folder_path)); 
+	  } else {
+	     printf("\n ## ++++++ If file < 1024 bytes \n");
+	    strcpy(hash_file, dutils.get_hash(folder_path));
+	  }
+
 	  myt = magic_open(MAGIC_CONTINUE|MAGIC_ERROR/*|MAGIC_DEBUG*/|MAGIC_MIME);
 	  magic_load(myt,NULL);
 	  //printf("magic output: '%s'\n",magic_file(myt,folderp_cstr));
-	  strcpy(hash_file, dutils.get_hash(folder_path));
+	 
 	  strcpy(hash_filename, dutils.get_hash_filename(folder_path));
 	  
 	  sprintf( sql, "INSERT INTO %s (FILE, FILE_HASH, NAME_HASH, SIZE, FILE_TYPE, DUP_COUNT) VALUES ('%s','%s','%s',%d,'%s',0);", tablename, folderp_cstr, hash_file, hash_filename, filesize, magic_file(myt,folderp_cstr));
 	  magic_close(myt);
 	  // sprintf( sql, "SELECT * FROM %s",tablename);
-	  printf("Full SQL INSERT STATEMENT::: %s ", sql);
+	  //	  printf("Full SQL INSERT STATEMENT::: %s ", sql);
 	  sqlu.sqlite_insert_db(sql, tablename); // insert file data into table
 	} else if (is_directory((bf::path) folder_path)) {     // is p a directory?
 	  cout <<  "\n#### " << folder_path << " is a directory containing:\n\n";
