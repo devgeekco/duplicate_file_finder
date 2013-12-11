@@ -36,8 +36,8 @@ int sys_scan::sscan(string folder_path) {
 	  if (filesize == 0) {
 	    strcpy(hash_file, ZEROHASH);
 	    //printf("\n ## ++++ If file 0 bytes then DEFAULT HASH: %s\n",hash_file);
-	  } else if (filesize >= 1024) {
-	    //  printf("\n ##### ++++++ If file >= 1024 bytes \n");
+	  } else if (filesize >= 1024 || filesize < 0) {
+	    //  printf("\n ##### ++++++ If file >= 1024 bytes or less than 0 bytes \n");
 	    // get the hash of 1024 bytes only for large files
 	    strcpy(hash_file, dutils.get_hash_1024only(folder_path)); 
 	  } else {
